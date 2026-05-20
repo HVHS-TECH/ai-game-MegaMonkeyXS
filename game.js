@@ -108,8 +108,8 @@ const monsterTypes = [
   }
 ];
 
-const worldWidth = 2400;
-const worldHeight = 1600;
+const worldWidth = 9999;
+const worldHeight = 9999;
 const monsterImageCache = {};
 
 function loadMonsterImage(src) {
@@ -252,8 +252,8 @@ function getRandomSpawnPosition() {
 }
 
 function updateCamera() {
-  state.camera.x = clamp(state.player.x - gameWidth / 2, 0, Math.max(0, worldWidth - gameWidth));
-  state.camera.y = clamp(state.player.y - gameHeight / 2, 0, Math.max(0, worldHeight - gameHeight));
+  state.camera.x = state.player.x - gameWidth / 2;
+  state.camera.y = state.player.y - gameHeight / 2;
 }
 
 function updatePlayerPosition(delta) {
@@ -647,20 +647,6 @@ function drawScene() {
     }
   }
 
-  ctx.save();
-  ctx.fillStyle = state.player.color;
-  ctx.beginPath();
-  ctx.arc(state.player.x, state.player.y, state.player.radius, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.strokeStyle = '#b7eeff';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 14px Arial';
-  ctx.textAlign = 'center';
-  ctx.fillText(state.player.name, state.player.x, state.player.y - state.player.radius - 12);
-  ctx.restore();
-
   for (const enemy of state.enemies) {
     const monster = monsterTypes.find(m => m.color === enemy.color) || monsterTypes[0];
     const image = loadMonsterImage(monster.image);
@@ -706,6 +692,23 @@ function drawScene() {
     }
   }
 
+  ctx.restore();
+
+  const centerX = gameWidth / 2;
+  const centerY = gameHeight / 2;
+
+  ctx.save();
+  ctx.fillStyle = state.player.color;
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, state.player.radius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#b7eeff';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 14px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText(state.player.name, centerX, centerY - state.player.radius - 12);
   ctx.restore();
 
   ctx.save();

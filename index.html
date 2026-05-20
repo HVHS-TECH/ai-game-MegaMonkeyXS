@@ -47,43 +47,44 @@ body {
 }
 header {
   position: absolute;
-  top: 24px;
+  top: 16px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  width: min(95%, 1080px);
+  width: min(95%, 900px);
   z-index: 4;
 }
 header h1 {
   margin: 0;
-  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  font-size: clamp(2rem, 3vw, 3.2rem);
   letter-spacing: 0.02em;
 }
 header p {
-  margin: 12px auto 0;
-  max-width: 900px;
-  color: #d2e7d8cc;
-  line-height: 1.6;
+  margin: 10px auto 0;
+  max-width: 760px;
+  color: #c8dec7cc;
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 .top-row,
 .stats-grid {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 .top-row {
   position: absolute;
-  top: 140px;
-  left: 24px;
-  width: min(360px, calc(100vw - 48px));
+  top: 120px;
+  left: 18px;
+  width: min(320px, calc(100vw - 36px));
   z-index: 4;
   grid-template-columns: 1fr;
 }
 .panel {
-  background: rgba(6, 16, 8, 0.85);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 22px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
+  background: rgba(6, 16, 8, 0.72);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 16px;
+  backdrop-filter: blur(12px);
 }
 .panel h2 {
   margin-top: 0;
@@ -113,19 +114,19 @@ header p {
 }
 .hud-grid {
   position: absolute;
-  left: 24px;
-  right: 24px;
-  bottom: 24px;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
   z-index: 3;
 }
 .hud-card {
-  background: rgba(8, 16, 10, 0.85);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 18px;
-  padding: 16px;
+  background: rgba(8, 16, 10, 0.72);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 12px;
 }
 .hud-card strong {
   display: block;
@@ -167,7 +168,7 @@ button,
   background: linear-gradient(135deg, #7c66f1, #34d6f3);
   color: #08101f;
   font-weight: 800;
-  padding: 14px 18px;
+  padding: 12px 14px;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 button:hover,

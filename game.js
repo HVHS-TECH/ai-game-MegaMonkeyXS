@@ -144,8 +144,8 @@ const state = {
     y: worldHeight / 2,
     radius: 18,
     color: '#81e3ff',
-    health: 80,
-    maxHealth: 80,
+    health: 120,
+    maxHealth: 120,
     name: 'Brainiac',
     weapon: weapons[0],
     mouseX: gameWidth / 2,
@@ -292,7 +292,8 @@ function spawnEnemy() {
     hp: health,
     maxHp: health,
     speed: speed,
-    level: levelVariance
+    level: levelVariance,
+    hitCooldown: 0
   });
 }
 
@@ -305,17 +306,20 @@ function nextWave() {
 
 function moveEnemies(delta) {
   for (const enemy of state.enemies) {
+    enemy.hitCooldown = Math.max(0, enemy.hitCooldown - delta);
     const dx = state.player.x - enemy.x;
     const dy = state.player.y - enemy.y;
     const dist = Math.hypot(dx, dy) || 1;
     enemy.x += (dx / dist) * enemy.speed * delta;
     enemy.y += (dy / dist) * enemy.speed * delta;
     if (Math.hypot(enemy.x - state.player.x, enemy.y - state.player.y) <= enemy.radius + state.player.radius) {
-      const damage = 18 + Math.floor(state.wave * 2.5);
-      const hitAmount = Math.max(1, Math.ceil(damage * delta * 0.003));
-      state.player.health -= hitAmount;
-      if (state.player.health < 0) state.player.health = 0;
-      appendLog(`Hit by ${enemy.name} for ${hitAmount} damage.`);
+      if (enemy.hitCooldown <= 0) {
+        const damage = 8 + Math.floor(state.wave * 1.3);
+        state.player.health -= damage;
+        state.player.health = Math.max(0, state.player.health);
+        enemy.hitCooldown = 420;
+        appendLog(`Hit by ${enemy.name} for ${damage} damage.`);
+      }
     }
   }
 }
@@ -523,8 +527,8 @@ function resetGame() {
   state.xpNeeded = 100;
   state.enemies = [];
   state.projectiles = [];
-  state.player.health = 80;
-  state.player.maxHealth = 80;
+  state.player.health = 120;
+  state.player.maxHealth = 120;
   state.player.x = worldWidth / 2;
   state.player.y = worldHeight / 2;
   state.player.mouseX = gameWidth / 2;

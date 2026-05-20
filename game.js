@@ -135,12 +135,6 @@ const state = {
   xpNeeded: 100,
   enemies: [],
   projectiles: [],
-  keys: {
-    w: false,
-    a: false,
-    s: false,
-    d: false
-  },
   camera: {
     x: 0,
     y: 0
@@ -307,11 +301,6 @@ function nextWave() {
   state.spawnTimer = 0;
   state.waveTimer = 0;
   appendLog(`Wave ${state.wave} begins! Brainrots are getting stronger.`);
-}
-
-function updatePlayerPosition() {
-  state.player.x = clamp(state.player.mouseX, state.player.radius, gameWidth - state.player.radius);
-  state.player.y = clamp(state.player.mouseY, state.player.radius, gameHeight - state.player.radius);
 }
 
 function moveEnemies(delta) {
@@ -758,22 +747,6 @@ canvas.addEventListener('mousemove', event => {
   state.player.mouseY = mouseY;
   state.player.targetX = state.camera.x + mouseX;
   state.player.targetY = state.camera.y + mouseY;
-});
-
-window.addEventListener('keydown', event => {
-  const key = event.key.toLowerCase();
-  if (['w', 'a', 's', 'd'].includes(key)) {
-    state.keys[key] = true;
-    event.preventDefault();
-  }
-});
-
-window.addEventListener('keyup', event => {
-  const key = event.key.toLowerCase();
-  if (['w', 'a', 's', 'd'].includes(key)) {
-    state.keys[key] = false;
-    event.preventDefault();
-  }
 });
 
 window.addEventListener('resize', () => {

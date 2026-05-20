@@ -9,6 +9,7 @@ const statusWeapon = document.getElementById('statusWeapon');
 const statusWeaponDesc = document.getElementById('statusWeaponDesc');
 const statusLevel = document.getElementById('statusLevel');
 const statusXP = document.getElementById('statusXP');
+const roundBanner = document.getElementById('roundBanner');
 const statusXPMax = document.getElementById('statusXPMax');
 const xpBar = document.getElementById('xpBar');
 const statusHealth = document.getElementById('statusHealth');
@@ -157,7 +158,9 @@ const state = {
 };
 
 function updateUI() {
-  statusWave.textContent = `Wave ${state.wave}`;
+  const roundText = `Round ${state.wave}`;
+  statusWave.textContent = roundText;
+  if (roundBanner) roundBanner.textContent = roundText;
   statusMonsters.textContent = `${state.enemies.length} Brainrots`;
   statusWeapon.textContent = state.player.weapon.name;
   statusWeaponDesc.textContent = state.player.weapon.description;
@@ -301,7 +304,7 @@ function nextWave() {
   state.wave += 1;
   state.spawnTimer = 0;
   state.waveTimer = 0;
-  appendLog(`Wave ${state.wave} begins! Brainrots are getting stronger.`);
+  appendLog(`Round ${state.wave} begins!`);
 }
 
 function moveEnemies(delta) {
@@ -746,14 +749,22 @@ function gameLoop(currentTime) {
   requestAnimationFrame(gameLoop);
 }
 
-canvas.addEventListener('mousemove', event => {
+function updateMousePositionFromEvent(event) {
   const rect = canvas.getBoundingClientRect();
-  const mouseX = event.clientX - rect.left;
-  const mouseY = event.clientY - rect.top;
+  const mouseX = clamp(event.clientX - rect.left, 0, rect.width);
+  const mouseY = clamp(event.clientY - rect.top, 0, rect.height);
   state.player.mouseX = mouseX;
   state.player.mouseY = mouseY;
   state.player.targetX = state.camera.x + mouseX;
   state.player.targetY = state.camera.y + mouseY;
+}
+
+canvas.addEventListener('mousemove', updateMousePositionFromEvent);
+
+document.addEventListener('mousemove', event => {
+  if (event.target !== canvas && !canvas.contains(event.target)) {
+    updateMousePositionFromEvent(event);
+  }
 });
 
 window.addEventListener('resize', () => {

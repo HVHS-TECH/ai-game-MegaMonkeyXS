@@ -45,26 +45,32 @@ body {
   box-shadow: none;
   overflow: hidden;
 }
-header {
+.round-banner {
   position: absolute;
   top: 16px;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center;
-  width: min(95%, 900px);
-  z-index: 4;
-}
-header h1 {
-  margin: 0;
-  font-size: clamp(2rem, 3vw, 3.2rem);
+  z-index: 20;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(10, 20, 12, 0.92);
+  backdrop-filter: blur(10px);
+  font-size: 1.05rem;
+  font-weight: 700;
   letter-spacing: 0.02em;
+  min-width: 120px;
+  text-align: center;
+  pointer-events: none;
 }
-header p {
-  margin: 10px auto 0;
-  max-width: 760px;
-  color: #c8dec7cc;
-  line-height: 1.5;
-  font-size: 0.95rem;
+.panel,
+.top-row,
+.hud-grid {
+  pointer-events: none;
+}
+.panel *,
+.top-row *,
+.hud-grid * {
+  pointer-events: auto;
 }
 .top-row,
 .stats-grid {
@@ -302,10 +308,7 @@ button:disabled,
 <body>
 <div class="container">
   <div class="game-panel">
-    <header>
-      <h1>Sogma</h1>
-      <p>Build your brain-themed hero, choose your starting weapon, and survive increasingly tough waves of Brainrot monsters. Each kill grants experience, level-ups unlock powerful weapon upgrades or new gear.</p>
-    </header>
+    <div id="roundBanner" class="round-banner">Round 0</div>
 
   <div class="top-row">
     <section class="panel">
@@ -316,7 +319,6 @@ button:disabled,
       <h3 style="margin-top: 20px;">Choose your first weapon</h3>
       <div class="weapon-list" id="weaponList"></div>
       <button id="startButton" style="margin-top: 22px; width: 100%;">Start Run</button>
-      <div id="startNote" style="margin-top: 16px; color: #a9b5ff; font-size: 0.95rem;">Player always spawns in the center. Move with the mouse and avoid Brainrot contact — you are much more fragile now.</div>
     </section>
 
     <section class="panel stats-grid">
@@ -356,7 +358,7 @@ button:disabled,
       </div>
       <div class="hud-card">
         <strong>Weapon Stats</strong>
-        <div id="statusWeaponDesc">Select a weapon and begin the run.</div>
+        <div id="statusWeaponInfo">Select a weapon and begin the run.</div>
       </div>
       <div class="hud-card">
         <strong>Controls</strong>

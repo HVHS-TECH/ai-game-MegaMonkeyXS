@@ -7,6 +7,7 @@ const statusWave = document.getElementById('statusWave');
 const statusMonsters = document.getElementById('statusMonsters');
 const statusWeapon = document.getElementById('statusWeapon');
 const statusWeaponDesc = document.getElementById('statusWeaponDesc');
+const statusWeaponInfo = document.getElementById('statusWeaponInfo');
 const statusLevel = document.getElementById('statusLevel');
 const statusXP = document.getElementById('statusXP');
 const roundBanner = document.getElementById('roundBanner');
@@ -164,6 +165,7 @@ function updateUI() {
   statusMonsters.textContent = `${state.enemies.length} Brainrots`;
   statusWeapon.textContent = state.player.weapon.name;
   statusWeaponDesc.textContent = state.player.weapon.description;
+  if (statusWeaponInfo) statusWeaponInfo.textContent = state.player.weapon.description;
   statusLevel.textContent = `Level ${state.level}`;
   statusXP.textContent = state.xp;
   statusXPMax.textContent = state.xpNeeded;

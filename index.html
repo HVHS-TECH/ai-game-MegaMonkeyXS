@@ -79,17 +79,17 @@ body {
 }
 .top-row {
   position: absolute;
-  top: 120px;
+  top: 70px;
   left: 18px;
-  width: min(320px, calc(100vw - 36px));
+  width: min(280px, calc(100vw - 36px));
   z-index: 4;
   grid-template-columns: 1fr;
 }
 .panel {
-  background: rgba(6, 16, 8, 0.72);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 20px;
-  padding: 16px;
+  background: rgba(6, 16, 8, 0.78);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 14px;
   backdrop-filter: blur(12px);
 }
 .panel h2 {
@@ -132,10 +132,10 @@ body {
   z-index: 3;
 }
 .hud-card {
-  background: rgba(8, 16, 10, 0.72);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px;
-  padding: 12px;
+  background: rgba(8, 16, 10, 0.74);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 10px;
 }
 .hud-card strong {
   display: block;
@@ -323,12 +323,12 @@ button:disabled,
 
     <section class="panel stats-grid">
       <div class="stat-card">
-        <strong id="statusWave">Wave 0</strong>
-        <div>Enemies will spawn harder each wave.</div>
+        <strong id="statusWave">Round 0</strong>
+        <div>Enemy count.</div>
       </div>
       <div class="stat-card">
         <strong id="statusMonsters">0 Brainrots</strong>
-        <div>Monsters alive on the field.</div>
+        <div>Alive now.</div>
       </div>
       <div class="stat-card">
         <strong id="statusWeapon">No Weapon</strong>

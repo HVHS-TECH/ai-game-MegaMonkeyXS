@@ -618,6 +618,8 @@ function drawGrassBackground() {
 }
 
 function drawScene() {
+  if (!gameWidth || !gameHeight) return;
+  
   ctx.clearRect(0, 0, gameWidth, gameHeight);
 
   ctx.save();
@@ -724,8 +726,8 @@ function drawScene() {
 }
 
 function resizeCanvas() {
-  gameWidth = canvas.clientWidth;
-  gameHeight = canvas.clientHeight;
+  gameWidth = canvas.clientWidth || 1080;
+  gameHeight = canvas.clientHeight || 600;
   const ratio = window.devicePixelRatio || 1;
   canvas.width = gameWidth * ratio;
   canvas.height = gameHeight * ratio;
@@ -741,9 +743,7 @@ function gameLoop(currentTime) {
   updateState(delta);
   drawScene();
   updateUI();
-  if (state.running || upgradeOverlay.style.display === 'flex') {
-    requestAnimationFrame(gameLoop);
-  }
+  requestAnimationFrame(gameLoop);
 }
 
 canvas.addEventListener('mousemove', event => {
@@ -775,3 +775,5 @@ const observer = new MutationObserver(() => {
   state.player.weapon = weapons.find(w => w.id === state.player.weapon.id) || state.player.weapon;
 });
 observer.observe(weaponList, { childList: true, subtree: true });
+
+requestAnimationFrame(gameLoop);

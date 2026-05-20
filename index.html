@@ -1,13 +1,354 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>My AI game</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brainrot Roguelike</title>
+<style>
+:root {
+  color-scheme: dark;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background: radial-gradient(circle at top, #1c1f3a 0%, #0a0c17 100%);
+  color: #eef2ff;
+}
+body {
+  display: grid;
+  place-items: center;
+  font-feature-settings: 'ss01' on;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: grid;
+}
+.game-panel {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 18px;
+  width: 100%;
+  min-height: 100vh;
+  padding: 18px;
+  border-radius: 28px;
+  background: rgba(12, 15, 33, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 120px rgba(15, 25, 80, 0.35);
+  overflow: hidden;
+}
+header {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 1080px;
+}
+header h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 4vw, 4.8rem);
+  letter-spacing: 0.02em;
+}
+header p {
+  margin: 12px auto 0;
+  max-width: 900px;
+  color: #cad4ff;
+  line-height: 1.6;
+}
+.top-row,
+.stats-grid {
+  display: grid;
+  gap: 18px;
+}
+.top-row {
+  grid-template-columns: minmax(260px, 360px) minmax(320px, 1fr);
+  align-items: start;
+}
+.panel {
+  background: rgba(16, 20, 43, 0.88);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 20px;
+}
+.panel h2 {
+  margin-top: 0;
+}
+.canvas-panel {
+  display: grid;
+  gap: 18px;
+  min-height: 0;
+  height: 100%;
+}
+.canvas-shell {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  height: 100%;
+  flex: 1;
+}
+.canvas-shell canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 22px;
+  background: #0a1009;
+  display: block;
+}
+.hud-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.hud-card {
+  background: rgba(23, 34, 63, 0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 16px;
+}
+.hud-card strong {
+  display: block;
+  font-size: 1.3rem;
+}
+.stats-grid {
+  grid-template-columns: 1fr 1.4fr;
+}
+@media (max-width: 980px) {
+  .top-row {
+    grid-template-columns: 1fr;
+  }
+  .hud-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+input[type='text'] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  color: #eef2ff;
+}
+button,
+.weapon-button,
+.upgrade-card button {
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c66f1, #34d6f3);
+  color: #08101f;
+  font-weight: 800;
+  padding: 14px 18px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+button:hover,
+.weapon-button:hover,
+.upgrade-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 28px rgba(52,214,243,0.18);
+}
+button:disabled,
+.weapon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.weapon-list {
+  display: grid;
+  gap: 12px;
+}
+.weapon-button {
+  text-align: left;
+  padding: 14px;
+  background: rgba(255,255,255,0.08);
+  color: #eef2ff;
+}
+.weapon-button.active {
+  border: 1px solid #6bd3ff;
+  background: rgba(41, 137, 252, 0.16);
+}
+.weapon-button span {
+  display: block;
+}
+.weapon-button .weapon-name {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.weapon-button .weapon-details {
+  color: #c9d4ff;
+  margin-top: 4px;
+  font-size: 0.93rem;
+}
+.stats-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.stat-card strong {
+  display: block;
+  font-size: 1.5rem;
+}
+.bar {
+  margin-top: 12px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  height: 16px;
+}
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #57daf5, #8e6fff);
+  width: 0%;
+}
+.history {
+  max-height: 350px;
+  overflow-y: auto;
+}
+.history li {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 10px 0;
+}
+.upgrade-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(3, 6, 18, 0.78);
+  z-index: 50;
+}
+.upgrade-panel {
+  width: min(720px, 92vw);
+  padding: 28px;
+  border-radius: 28px;
+  background: rgba(12, 18, 39, 0.98);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.upgrade-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+.upgrade-card {
+  background: rgba(255,255,255,0.06);
+  padding: 18px;
+  border-radius: 18px;
+  display: grid;
+  gap: 12px;
+}
+.upgrade-card h4 {
+  margin: 0;
+}
+.upgrade-card p {
+  margin: 0;
+  color: #c8d3ff;
+}
+.game-over {
+  margin-top: 14px;
+  padding: 18px;
+  background: rgba(255, 84, 84, 0.12);
+  border: 1px solid rgba(255,84,84,0.22);
+  border-radius: 18px;
+  color: #ffe0e0;
+}
+@media (max-width: 900px) {
+  .top-row {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 <body>
+<div class="container">
+  <div class="game-panel">
+    <header>
+      <h1>Brainrot Roguelike</h1>
+      <p>Build your brain-themed hero, choose your starting weapon, and survive increasingly tough waves of Brainrot monsters. Each kill grants experience, level-ups unlock powerful weapon upgrades or new gear.</p>
+    </header>
 
-<h1>AI game goes here</h1>
+  <div class="top-row">
+    <section class="panel">
+      <h2>Hero Setup</h2>
+      <label for="playerName">Player Name</label>
+      <input id="playerName" type="text" value="Brainiac" maxlength="16" />
 
+      <h3 style="margin-top: 20px;">Choose your first weapon</h3>
+      <div class="weapon-list" id="weaponList"></div>
+      <button id="startButton" style="margin-top: 22px; width: 100%;">Start Run</button>
+      <div id="startNote" style="margin-top: 16px; color: #a9b5ff; font-size: 0.95rem;">Player always spawns in the center. Move with the mouse and avoid Brainrot contact — you are much more fragile now.</div>
+    </section>
 
+    <section class="panel stats-grid">
+      <div class="stat-card">
+        <strong id="statusWave">Wave 0</strong>
+        <div>Enemies will spawn harder each wave.</div>
+      </div>
+      <div class="stat-card">
+        <strong id="statusMonsters">0 Brainrots</strong>
+        <div>Monsters alive on the field.</div>
+      </div>
+      <div class="stat-card">
+        <strong id="statusWeapon">No Weapon</strong>
+        <div id="statusWeaponDesc">Select your starting weapon first.</div>
+      </div>
+      <div class="stat-card">
+        <strong id="statusLevel">Level 1</strong>
+        <div>Experience: <span id="statusXP">0</span> / <span id="statusXPMax">100</span></div>
+        <div class="bar"><div id="xpBar" class="bar-fill"></div></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="panel canvas-panel">
+    <div class="canvas-shell">
+      <canvas id="gameCanvas" width="1080" height="600"></canvas>
+    </div>
+    <div class="hud-grid">
+      <div class="hud-card">
+        <strong id="statusHealth">Health 80 / 80</strong>
+        <div>Survive the brainrot wave.</div>
+        <div class="bar"><div id="healthBar" class="bar-fill"></div></div>
+      </div>
+      <div class="hud-card">
+        <strong>Battle Log</strong>
+        <ul id="historyList" class="history"></ul>
+      </div>
+      <div class="hud-card">
+        <strong>Weapon Stats</strong>
+        <div id="statusWeaponDesc">Select a weapon and begin the run.</div>
+      </div>
+      <div class="hud-card">
+        <strong>Controls</strong>
+        <div>Move with mouse. Weapon swings and projectiles fire automatically.</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="upgrade-overlay" id="upgradeOverlay">
+  <div class="upgrade-panel">
+    <h2>Level Up!</h2>
+    <p id="upgradeText">Choose an upgrade to improve your next run.</p>
+    <div class="upgrade-grid" id="upgradeOptions"></div>
+  </div>
+</div>
 
 <script src="game.js"></script>
 </body>

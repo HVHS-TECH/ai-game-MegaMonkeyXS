@@ -124,22 +124,24 @@ body {
 .hud-grid {
   position: absolute;
   left: 18px;
-  right: 18px;
+  right: 260px;
   bottom: 18px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   z-index: 3;
 }
 .hud-card {
-  background: rgba(8, 16, 10, 0.74);
+  background: rgba(8, 16, 10, 0.78);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
-  padding: 10px;
+  padding: 10px 12px;
+  min-height: 92px;
 }
 .hud-card strong {
   display: block;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
 }
 .stats-grid {
   grid-template-columns: 1fr 1.4fr;
@@ -194,11 +196,11 @@ button:disabled,
 }
 .weapon-list {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 .weapon-button {
   text-align: left;
-  padding: 14px;
+  padding: 10px 12px;
   background: rgba(255,255,255,0.08);
   color: #eef2ff;
 }
@@ -289,7 +291,29 @@ button:disabled,
   border: 1px solid rgba(255,84,84,0.22);
   border-radius: 18px;
   color: #ffe0e0;
-}
+  }
+  .exp-panel {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    width: min(240px, calc(26vw + 50px));
+    z-index: 4;
+    background: rgba(10, 18, 12, 0.88);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 14px;
+  }
+  .exp-panel .exp-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #e8f7ff;
+  }
+  .exp-panel .bar {
+    height: 16px;
+  }
 @media (max-width: 900px) {
   .top-row {
     width: calc(100vw - 32px);

@@ -7,11 +7,8 @@ const statusWave = document.getElementById('statusWave');
 const statusMonsters = document.getElementById('statusMonsters');
 const statusWeapon = document.getElementById('statusWeapon');
 const statusWeaponDesc = document.getElementById('statusWeaponDesc');
-const statusWeaponInfo = document.getElementById('statusWeaponInfo');
 const statusLevel = document.getElementById('statusLevel');
-const statusXP = document.getElementById('statusXP');
 const roundBanner = document.getElementById('roundBanner');
-const statusXPMax = document.getElementById('statusXPMax');
 const xpBar = document.getElementById('xpBar');
 const statusHealth = document.getElementById('statusHealth');
 const healthBar = document.getElementById('healthBar');
@@ -165,16 +162,14 @@ function updateUI() {
   statusMonsters.textContent = `${state.enemies.length} Brainrots`;
   statusWeapon.textContent = state.player.weapon.name;
   statusWeaponDesc.textContent = state.player.weapon.description;
-  if (statusWeaponInfo) statusWeaponInfo.textContent = state.player.weapon.description;
   statusLevel.textContent = `Level ${state.level}`;
-  statusXP.textContent = state.xp;
-  statusXPMax.textContent = state.xpNeeded;
   xpBar.style.width = `${Math.min(100, (state.xp / state.xpNeeded) * 100)}%`;
   statusHealth.textContent = `Health ${state.player.health} / ${state.player.maxHealth}`;
   healthBar.style.width = `${Math.max(0, (state.player.health / state.player.maxHealth) * 100)}%`;
 }
 
 function appendLog(message) {
+  if (!historyList) return;
   const entry = document.createElement('li');
   entry.textContent = message;
   historyList.prepend(entry);

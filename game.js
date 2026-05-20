@@ -144,8 +144,8 @@ const state = {
     y: worldHeight / 2,
     radius: 18,
     color: '#81e3ff',
-    health: 120,
-    maxHealth: 120,
+    health: 999,
+    maxHealth: 999,
     name: 'Brainiac',
     weapon: weapons[0],
     mouseX: gameWidth / 2,
@@ -278,8 +278,8 @@ function updatePlayerPosition(delta) {
 function spawnEnemy() {
   const monsterType = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
   const levelVariance = Math.max(1, state.wave + Math.floor(Math.random() * 2));
-  const health = 25 + state.wave * 8 + levelVariance * 6;
-  const speed = 0.7 + Math.min(1.6, state.wave * 0.04 + Math.random() * 0.4);
+  const health = 34 + state.wave * 4 + levelVariance * 4;
+  const speed = 0.35 + Math.min(0.8, state.wave * 0.025 + Math.random() * 0.2);
   const spawn = getRandomSpawnPosition();
   state.enemies.push({
     id: String(Date.now()) + Math.random(),
@@ -314,10 +314,10 @@ function moveEnemies(delta) {
     enemy.y += (dy / dist) * enemy.speed * delta;
     if (Math.hypot(enemy.x - state.player.x, enemy.y - state.player.y) <= enemy.radius + state.player.radius) {
       if (enemy.hitCooldown <= 0) {
-        const damage = 8 + Math.floor(state.wave * 1.3);
+        const damage = 1 + Math.floor(state.wave * 0.2);
         state.player.health -= damage;
         state.player.health = Math.max(0, state.player.health);
-        enemy.hitCooldown = 420;
+        enemy.hitCooldown = 180;
         appendLog(`Hit by ${enemy.name} for ${damage} damage.`);
       }
     }
@@ -568,10 +568,10 @@ function updateState(delta) {
     nextWave();
   }
 
-  const spawnInterval = Math.max(600, 1800 - state.wave * 90);
+  const spawnInterval = Math.max(2400, 3800 - state.wave * 60);
   if (state.spawnTimer >= spawnInterval) {
     state.spawnTimer = 0;
-    const spawnCount = 1 + Math.floor(state.wave / 2);
+    const spawnCount = 1 + Math.floor(state.wave / 5);
     for (let i = 0; i < spawnCount; i += 1) {
       spawnEnemy();
     }

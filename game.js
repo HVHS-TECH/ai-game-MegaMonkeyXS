@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d');
 const playerNameInput = document.getElementById('playerName');
 const weaponList = document.getElementById('weaponList');
 const startButton = document.getElementById('startButton');
+const setupPanel = document.getElementById('setupPanel');
 const statusWave = document.getElementById('statusWave');
 const statusMonsters = document.getElementById('statusMonsters');
 const statusWeapon = document.getElementById('statusWeapon');
@@ -536,6 +537,7 @@ function resetGame() {
   state.player.targetX = worldWidth / 2;
   state.player.targetY = worldHeight / 2;
   updateCamera();
+  if (setupPanel) setupPanel.style.display = '';
   startButton.textContent = 'Start Run';
   appendLog('Run reset. Choose a weapon and begin again.');
   updateUI();
@@ -551,6 +553,7 @@ function startRun() {
   nextWave();
   state.running = true;
   state.lastTime = performance.now();
+  if (setupPanel) setupPanel.style.display = 'none';
   startButton.textContent = 'Restart Run';
   appendLog(`${state.player.name} enters the Brainrot arena.`);
   requestAnimationFrame(gameLoop);

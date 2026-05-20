@@ -156,6 +156,8 @@ const state = {
     weapon: weapons[0],
     mouseX: gameWidth / 2,
     mouseY: gameHeight / 2,
+    targetX: worldWidth / 2,
+    targetY: worldHeight / 2,
     speed: 4.5
   }
 };
@@ -261,16 +263,15 @@ function updateCamera() {
 }
 
 function updatePlayerPosition(delta) {
-  let dx = 0;
-  let dy = 0;
-  if (state.keys.w) dy -= 1;
-  if (state.keys.s) dy += 1;
-  if (state.keys.a) dx -= 1;
-  if (state.keys.d) dx += 1;
-  if (dx !== 0 || dy !== 0) {
-    const mag = Math.hypot(dx, dy) || 1;
-    dx /= mag;
-    dy /= mag;
+  const targetX = state.player.targetX;
+  const targetY = state.player.targetY;
+  let dx = targetX - state.player.x;
+  let dy = targetY - state.player.y;
+  const distance = Math.hypot(dx, dy);
+
+  if (distance > 6) {
+    dx /= distance;
+    dy /= distance;
     state.player.x += dx * state.player.speed * delta;
     state.player.y += dy * state.player.speed * delta;
   }
@@ -539,6 +540,8 @@ function resetGame() {
   state.player.y = worldHeight / 2;
   state.player.mouseX = gameWidth / 2;
   state.player.mouseY = gameHeight / 2;
+  state.player.targetX = worldWidth / 2;
+  state.player.targetY = worldHeight / 2;
   updateCamera();
   startButton.textContent = 'Start Run';
   appendLog('Run reset. Choose a weapon and begin again.');
@@ -749,8 +752,12 @@ function gameLoop(currentTime) {
 
 canvas.addEventListener('mousemove', event => {
   const rect = canvas.getBoundingClientRect();
-  state.player.mouseX = event.clientX - rect.left;
-  state.player.mouseY = event.clientY - rect.top;
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+  state.player.mouseX = mouseX;
+  state.player.mouseY = mouseY;
+  state.player.targetX = state.camera.x + mouseX;
+  state.player.targetY = state.camera.y + mouseY;
 });
 
 window.addEventListener('keydown', event => {

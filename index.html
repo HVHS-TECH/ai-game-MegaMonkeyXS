@@ -19,12 +19,13 @@ body {
   width: 100%;
   height: 100%;
   min-height: 100%;
-  background: radial-gradient(circle at top, #1c1f3a 0%, #0a0c17 100%);
+  background: #08100d;
   color: #eef2ff;
+  overflow: hidden;
 }
 body {
   display: grid;
-  place-items: center;
+  place-items: stretch;
   font-feature-settings: 'ss01' on;
 }
 .container {
@@ -34,32 +35,34 @@ body {
   display: grid;
 }
 .game-panel {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 18px;
+  position: relative;
   width: 100%;
   min-height: 100vh;
-  padding: 18px;
-  border-radius: 28px;
-  background: rgba(12, 15, 33, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 120px rgba(15, 25, 80, 0.35);
+  height: 100vh;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
   overflow: hidden;
 }
 header {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
-  margin: 0 auto;
-  max-width: 1080px;
+  width: min(95%, 1080px);
+  z-index: 4;
 }
 header h1 {
   margin: 0;
-  font-size: clamp(2.6rem, 4vw, 4.8rem);
+  font-size: clamp(2.4rem, 4vw, 4.4rem);
   letter-spacing: 0.02em;
 }
 header p {
   margin: 12px auto 0;
   max-width: 900px;
-  color: #cad4ff;
+  color: #d2e7d8cc;
   line-height: 1.6;
 }
 .top-row,
@@ -68,46 +71,58 @@ header p {
   gap: 18px;
 }
 .top-row {
-  grid-template-columns: minmax(260px, 360px) minmax(320px, 1fr);
-  align-items: start;
+  position: absolute;
+  top: 140px;
+  left: 24px;
+  width: min(360px, calc(100vw - 48px));
+  z-index: 4;
+  grid-template-columns: 1fr;
 }
 .panel {
-  background: rgba(16, 20, 43, 0.88);
+  background: rgba(6, 16, 8, 0.85);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 24px;
+  border-radius: 22px;
   padding: 20px;
+  backdrop-filter: blur(10px);
 }
 .panel h2 {
   margin-top: 0;
 }
 .canvas-panel {
+  position: absolute;
+  inset: 0;
   display: grid;
-  gap: 18px;
-  min-height: 0;
-  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 .canvas-shell {
-  position: relative;
+  position: absolute;
+  inset: 0;
   display: grid;
-  min-height: 0;
-  height: 100%;
-  flex: 1;
+  overflow: hidden;
 }
 .canvas-shell canvas {
   width: 100%;
   height: 100%;
   min-height: 0;
-  border-radius: 22px;
-  background: #0a1009;
+  border-radius: 0;
+  background: transparent;
   display: block;
 }
 .hud-grid {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
+  z-index: 3;
 }
 .hud-card {
-  background: rgba(23, 34, 63, 0.9);
+  background: rgba(8, 16, 10, 0.85);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 18px;
   padding: 16px;
@@ -266,10 +281,16 @@ button:disabled,
 }
 @media (max-width: 900px) {
   .top-row {
-    grid-template-columns: 1fr;
+    width: calc(100vw - 32px);
   }
-  .stats-grid {
+  .hud-grid {
     grid-template-columns: 1fr;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+  .panel {
+    padding: 16px;
   }
 }
 </style>

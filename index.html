@@ -146,10 +146,11 @@ body {
 }
 @media (max-width: 980px) {
   .top-row {
-    grid-template-columns: 1fr;
+    width: calc(100vw - 32px);
+    top: 70px;
   }
-  .hud-grid,
-  .stats-grid {
+  .hud-grid {
+    right: 18px;
     grid-template-columns: 1fr;
   }
 }

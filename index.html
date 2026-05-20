@@ -11,36 +11,20 @@
   <div class="game-panel">
     <div id="roundBanner" class="round-banner">Round 0</div>
 
-  <div class="top-row">
-    <section class="panel">
-      <h2>Hero Setup</h2>
-      <label for="playerName">Player Name</label>
-      <input id="playerName" type="text" value="Brainiac" maxlength="16" />
-
-      <h3 class="section-subtitle">Choose your first weapon</h3>
+    <div id="setupPanel" class="center-setup panel">
+      <div class="setup-header">
+        <div class="setup-name">
+          <label for="playerName">Player Name</label>
+          <input id="playerName" type="text" value="Brainiac" maxlength="16" />
+        </div>
+        <div class="setup-current">
+          <strong id="statusWeapon">No Weapon</strong>
+          <div id="statusWeaponDesc">Select your starting weapon first.</div>
+        </div>
+      </div>
       <div class="weapon-list" id="weaponList"></div>
       <button id="startButton" class="primary-button">Start Run</button>
-    </section>
-
-    <section class="panel stats-grid">
-      <div class="stat-card">
-        <strong id="statusWave">Round 0</strong>
-        <div>Enemy count.</div>
-      </div>
-      <div class="stat-card">
-        <strong id="statusMonsters">0 Brainrots</strong>
-        <div>Alive now.</div>
-      </div>
-      <div class="stat-card">
-        <strong id="statusWeapon">No Weapon</strong>
-        <div id="statusWeaponDesc">Select your starting weapon first.</div>
-      </div>
-      <div class="stat-card">
-        <strong>Level 1</strong>
-        <div>Experience progress shown at bottom right.</div>
-      </div>
-    </section>
-  </div>
+    </div>
 
   <div class="panel canvas-panel">
     <div class="canvas-shell">
@@ -51,14 +35,6 @@
         <strong id="statusHealth">Health 80 / 80</strong>
         <div>Stay alive.</div>
         <div class="bar"><div id="healthBar" class="bar-fill"></div></div>
-      </div>
-      <div class="hud-card">
-        <strong>Weapon</strong>
-        <div>Select a weapon to begin.</div>
-      </div>
-      <div class="hud-card">
-        <strong>Controls</strong>
-        <div>Move with mouse. Fire is automatic.</div>
       </div>
     </div>
     <div class="exp-panel">

@@ -336,9 +336,8 @@ button:disabled,
         <div id="statusWeaponDesc">Select your starting weapon first.</div>
       </div>
       <div class="stat-card">
-        <strong id="statusLevel">Level 1</strong>
-        <div>Experience: <span id="statusXP">0</span> / <span id="statusXPMax">100</span></div>
-        <div class="bar"><div id="xpBar" class="bar-fill"></div></div>
+        <strong>Level 1</strong>
+        <div>Experience progress shown at bottom right.</div>
       </div>
     </section>
   </div>
@@ -350,21 +349,21 @@ button:disabled,
     <div class="hud-grid">
       <div class="hud-card">
         <strong id="statusHealth">Health 80 / 80</strong>
-        <div>Survive the brainrot wave.</div>
+        <div>Stay alive.</div>
         <div class="bar"><div id="healthBar" class="bar-fill"></div></div>
       </div>
       <div class="hud-card">
-        <strong>Battle Log</strong>
-        <ul id="historyList" class="history"></ul>
-      </div>
-      <div class="hud-card">
-        <strong>Weapon Stats</strong>
-        <div id="statusWeaponInfo">Select a weapon and begin the run.</div>
+        <strong>Weapon</strong>
+        <div>Select a weapon to begin.</div>
       </div>
       <div class="hud-card">
         <strong>Controls</strong>
-        <div>Move with mouse. Weapon swings and projectiles fire automatically.</div>
+        <div>Move with mouse. Fire is automatic.</div>
       </div>
+    </div>
+    <div class="exp-panel">
+      <div class="exp-label">Level <span id="statusLevel">1</span></div>
+      <div class="bar"><div id="xpBar" class="bar-fill"></div></div>
     </div>
   </div>
   </div>
